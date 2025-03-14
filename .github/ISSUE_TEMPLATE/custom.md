@@ -1,12 +1,3 @@
----
-name: Custom issue template
-about: Features, Bug, etc should use this issue template
-title: ''
-labels: ''
-assignees: ''
-
----
-
 ## :loudspeaker: Status
 
 `<yyyy_mm_dd>` :writing_hand: status
