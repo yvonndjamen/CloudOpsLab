@@ -1,0 +1,37 @@
+backend:
+  name: gitopslite-chart-backend
+  backend:
+    image:
+      repository: gitopslite-backend
+      tag: latest
+    imagePullPolicy: Never
+  ports:
+  - port: 4000
+    protocol: TCP
+    targetPort: 4000
+  replicas: 1
+  type: ClusterIP
+  ingress:
+    host: backend.gitopslite.com
+  env:
+    frontendUrl: http://frontend.gitopslite.com:8080
+
+frontend:
+  name: gitopslite-chart-frontend
+  frontend:
+    env:
+      reactAppBackendUrl: http://backend.gitopslite.com:8080
+    image:
+      repository: gitopslite-frontend
+      tag: latest
+    imagePullPolicy: Never
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
+  replicas: 1
+  type: ClusterIP
+  ingress:
+    host: frontend.gitopslite.com
+
+kubernetesClusterDomain: cluster.local

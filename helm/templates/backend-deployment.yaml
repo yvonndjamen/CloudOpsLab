@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.backend.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: backend
+      {{- include "chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: backend
+        {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: backend
+        image: {{ .Values.backend.backend.image.repository }}:{{ .Values.backend.backend.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.backend.backend.imagePullPolicy }}
+        env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        - name: FRONTEND_URL
+          value: {{ .Values.backend.env.frontendUrl }}
+        ports:
+        - containerPort: 4000
+        resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.backend.name }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.backend.type }}
+  selector:
+    app: backend
+    {{- include "chart.selectorLabels" . | nindent 4 }}
+  ports:
+  - port: 4000
+    targetPort: 4000
