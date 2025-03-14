@@ -1,6 +1,6 @@
 # Cloud Ops Lab  
 
-A full-stack cloud-native application demonstrating best practices in:  
+A full-stack cloud-native application demonstrating my knowledges in:  
 ✅ **Containerization** (Docker, multi-stage build for frontend & backend)  
 ✅ **Orchestration** (Kubernetes YAML, Helm Charts, ArgoCD for GitOps)  
 ✅ **Cloud Infrastructure** (Azure, Pulumi for infrastructure as code)  
